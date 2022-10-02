@@ -1,13 +1,14 @@
 import RenderCampsite from "../features/campsites/RenderCampsite";
-import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFavorite } from "../features/favorites/favoritesSlice";
 
 const CampsiteInfoScreen = ({ route }) => {
     const { campsite } = route.params;
     const comments = useSelector((state) => state.comments);
+    const favorites = useSelector((state) => state.favorites);
 
-    const [favorite, setFavorite] = useState(false);
+    const dispatch = useDispatch();
 
     const renderCommentItem = ({ item }) => {
         return (
@@ -24,19 +25,21 @@ const CampsiteInfoScreen = ({ route }) => {
     return (
         <FlatList
             data={comments.commentsArray.filter(
-                (comment) => comment.campsiteId === campsite.id,
+                (comment) => comment.campsiteId === campsite.id
             )}
             renderItem={renderCommentItem}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{
                 marginHorizontal: 20,
-                paddingVertical: 20,
+                paddingVertical: 20
             }}
             ListHeaderComponent={
                 <>
                     <RenderCampsite
-                        markFavorite={() => setFavorite(true)}
-                        isFavorite={favorite}
+                        markFavorite={() =>
+                            dispatch(toggleFavorite(campsite.id))
+                        }
+                        isFavorite={favorites.includes(campsite.id)}
                         campsite={campsite}
                     />
                     <Text style={styles.commentsTitle}>Comments</Text>
@@ -54,13 +57,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#43484d",
         padding: 10,
-        paddingTop: 30,
+        paddingTop: 30
     },
     commentItem: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: "#fff",
-    },
+        backgroundColor: "#fff"
+    }
 });
 
 export default CampsiteInfoScreen;
