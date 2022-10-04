@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
     createDrawerNavigator,
     DrawerContentScrollView,
-    DrawerItemList,
+    DrawerItemList
 } from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
 import CampsiteInfoScreen from "./CampsiteInfoScreen";
@@ -19,14 +19,15 @@ import { fetchPartners } from "../features/partners/partnersSlice";
 import { fetchCampsites } from "../features/campsites/campsitesSlice";
 import { fetchPromotions } from "../features/promotions/promotionsSlice";
 import { fetchComments } from "../features/comments/commentsSlice";
+import ReservationScreen from "./ReservationScreen";
 
 const Drawer = createDrawerNavigator();
 
 const screenOptions = {
     headerTintColor: "#fff",
     headerStyle: {
-        backgroundColor: "#5637DD",
-    },
+        backgroundColor: "#5637DD"
+    }
 };
 
 const HomeNavigator = () => {
@@ -46,7 +47,7 @@ const HomeNavigator = () => {
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
-                    ),
+                    )
                 })}
             />
         </Stack.Navigator>
@@ -73,7 +74,7 @@ const DirectoryNavigator = () => {
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
-                    ),
+                    )
                 })}
             />
             <Stack.Screen
@@ -101,7 +102,7 @@ const AboutNavigator = () => {
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
-                    ),
+                    )
                 })}
             />
         </Stack.Navigator>
@@ -125,7 +126,31 @@ const ContactNavigator = () => {
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
-                    ),
+                    )
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const ReservationNavigator = () => {
+    const Stack = createStackNavigator();
+
+    return (
+        <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+                name="Reservation"
+                component={ReservationScreen}
+                options={({ navigation }) => ({
+                    title: "Reservation Search",
+                    headerLeft: () => (
+                        <Icon
+                            name="tree"
+                            type="font-awesome"
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
                 })}
             />
         </Stack.Navigator>
@@ -161,7 +186,7 @@ const Main = () => {
             style={{
                 flex: 1,
                 paddingTop:
-                    Platform.OS === "ios" ? 0 : Constants.statusBarHeight,
+                    Platform.OS === "ios" ? 0 : Constants.statusBarHeight
             }}
         >
             <Drawer.Navigator
@@ -182,7 +207,7 @@ const Main = () => {
                                 iconStyle={{ width: 24 }}
                                 color={color}
                             />
-                        ),
+                        )
                     }}
                 />
 
@@ -199,7 +224,7 @@ const Main = () => {
                                 iconStyle={{ width: 24 }}
                                 color={color}
                             />
-                        ),
+                        )
                     }}
                 />
 
@@ -216,7 +241,7 @@ const Main = () => {
                                 iconStyle={{ width: 24 }}
                                 color={color}
                             />
-                        ),
+                        )
                     }}
                 />
 
@@ -233,7 +258,23 @@ const Main = () => {
                                 iconStyle={{ width: 24 }}
                                 color={color}
                             />
-                        ),
+                        )
+                    }}
+                />
+                <Drawer.Screen
+                    name="Reserve Campsite"
+                    component={ReservationNavigator}
+                    options={{
+                        title: "Reserve Campsite",
+                        drawerIcon: ({ color }) => (
+                            <Icon
+                                name="tree"
+                                type="font-awesome"
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
                     }}
                 />
             </Drawer.Navigator>
@@ -248,23 +289,23 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     drawerHeaderText: {
         color: "#fff",
         fontSize: 24,
-        fontWeight: "bold",
+        fontWeight: "bold"
     },
     drawerImage: {
         margin: 10,
         height: 60,
-        width: 60,
+        width: 60
     },
     stackIcon: {
         marginLeft: 10,
         color: "#fff",
-        fontSize: 24,
-    },
+        fontSize: 24
+    }
 });
 
 export default Main;
