@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { View, FlatList, Text } from "react-native";
 import { Avatar, ListItem } from "react-native-elements";
-import { Loading } from "../components/LoadingComponent";
+import Loading from "../components/LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 
 const FavoritesScreen = ({ navigation }) => {
@@ -11,20 +11,24 @@ const FavoritesScreen = ({ navigation }) => {
     const favorites = useSelector((state) => state.favorites);
 
     const renderFavoriteItem = ({ item: campsite }) => {
-        <ListItem
-            onPress={() =>
-                navigation.navigate("Directory", {
-                    screen: "CampsiteInfo",
-                    params: { campsite },
-                })
-            }
-        >
-            <Avatar rounded source={{ uri: baseUrl + campsite.image }} />
-            <ListItem.Content>
-                <ListItem.Title>{campsite.name}</ListItem.Title>
-                <ListItem.Subtitle>{campsite.description}</ListItem.Subtitle>
-            </ListItem.Content>
-        </ListItem>;
+        return (
+            <ListItem
+                onPress={() =>
+                    navigation.navigate("Directory", {
+                        screen: "CampsiteInfo",
+                        params: { campsite },
+                    })
+                }
+            >
+                <Avatar rounded source={{ uri: baseUrl + campsite.image }} />
+                <ListItem.Content>
+                    <ListItem.Title>{campsite.name}</ListItem.Title>
+                    <ListItem.Subtitle>
+                        {campsite.description}
+                    </ListItem.Subtitle>
+                </ListItem.Content>
+            </ListItem>
+        );
     };
 
     if (isLoading) {
