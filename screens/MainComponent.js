@@ -238,15 +238,8 @@ const CustomDrawerContent = (props) => (
 const Main = () => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchCampsites());
-        dispatch(fetchPromotions());
-        dispatch(fetchPartners());
-        dispatch(fetchComments());
-    }, [dispatch]);
-
-    useEffect(() => {
-        NetInfo.fetch().then((connectionInfo) => {
+    const showNetInfo = async () => {
+        await NetInfo.fetch().then((connectionInfo) => {
             Platform.OS === "ios"
                 ? Alert.alert(
                       "Initial Network Connectivity Type:",
@@ -264,6 +257,17 @@ const Main = () => {
             },
         );
         return unsubscribeNetInfo;
+    };
+
+    useEffect(() => {
+        dispatch(fetchCampsites());
+        dispatch(fetchPromotions());
+        dispatch(fetchPartners());
+        dispatch(fetchComments());
+    }, [dispatch]);
+
+    useEffect(() => {
+        showNetInfo();
     }, []);
     const handleConnectivityChange = (connectionInfo) => {
         let connectionMsg = "You are now connected to an active network.";
